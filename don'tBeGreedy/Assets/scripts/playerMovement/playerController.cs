@@ -1,46 +1,78 @@
 using UnityEngine;
 using System.Collections;
 /*** Don't Be Greedy Prototype Alpha 1B player controller Script >:) [5.5] ***/
-
-public class playerController : MonoBehaviour {
-
+public class PlayerController : MonoBehaviour {
     /**** VARABLES ****/
 
     /** PUBLIC **/
-    /* PLAYER MOVE */
-    public float moveRate; //player movement speed
-    public float moveRateSprint; //player sprint rate
-    public float moveRateLR; //player move rate LR
-    public float moveRateB; //player move rate Backwards
-    public float jumpRate; //player jump height
+    public float rotateSpeed = 2.0f; //rotate
+    public float forwardSpeed = 2.0f; //forward
+    private CharacterController playerController;
 
     /** PRIVATE **/
-    private CharacterController playerControler; //sets player control var
-
-
 	// Use this for initialization
 	void Start () {
-        
-        playerControler = GetComponent<CharacterController>(); // attaches to player
+	
+        /* getComponet*/
+        playerController = GetComponent<CharacterController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        // check to see if player controller is grounded [allow to jump]
-        if (Input.GetKeyDown(KeyCode.Space) && playerControler.isGrounded) {
+        /* Check to see if grounded JUMP*/
 
-            playerControler.Move(Vector3.up); //force player controller up
+        if (Input.GetKey(KeyCode.Space) && playerController.isGrounded) {
+            playerController.Move(Vector3.up);//force up
 
-            Debug.Log("isGrounded");
         }
+        /* rotate 
+        transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
+        //TEMP FLOAT */
+        Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
+        float speed = forwardSpeed * Input.GetAxis("Vertical"); //pos or neg number apply forward
+        playerController.SimpleMove(speed * forward); 
 
-        if (!Input.GetKeyDown(KeyCode.Space) && playerControler.isGrounded)
-        {
+        /* rotate v2*/
 
-            Debug.Log("notGrounded");
+        /* Move FB
+        if (Input.GetButtonDown("Vertical")) {
+ 
+            //FORWARD
+            if (Input.GetAxis("Vertical") > 0) {
+
+                Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
+                float speed = forwardSpeed * Input.GetAxis("Vertical"); //pos or neg number apply forward
+                playerController.SimpleMove(speed * forward); 
+
+            }
+
+            //BACKWARD
+            else {
+                Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
+                float speed = forwardSpeed * Input.GetAxis("Vertical"); //pos or neg number apply forward
+                playerController.SimpleMove(speed * forward); 
+
+            
+            }
+
+        } */
+
+        /* ROTATE LR */
+        if (Input.GetButtonDown("Horizontal")) { 
+
+            //RIGHT
+            if (Input.GetAxis("Horizontal") > 0) {
+
+                playerController.transform.Rotate(0, 90, 0);
+                Debug.Log("right [A]");
+            }
+
+            //LEFT
+            else {
+                playerController.transform.Rotate(0, -90, 0);
+                Debug.Log("left [D]");
+            }
+        
         }
-
-        transform.Rotate(0,Input.GetAxis("") //this part vid 18 [8:08min]
-
 	}
 }
