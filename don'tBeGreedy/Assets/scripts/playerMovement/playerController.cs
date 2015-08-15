@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI; //calls UI
 using System.Collections;
 
-/*** Don't Be Greedy Prototype Alpha 1 player controller Script >:) [5.6] ***/
+/*** Don't Be Greedy Prototype Alpha 1c player controller Script >:) [5.6] ***/
 public class PlayerController : MonoBehaviour
 {
     /**** VARABLES ****/
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetAxis("Vertical") > 0)
             {
                 Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
-                float speed = forwardSpeed - Input.GetAxis("Vertical"); //pos or neg number apply forward
+                float speed = forwardSpeed -= Input.GetAxis("Vertical"); //pos or neg number apply forward
                 playerController.SimpleMove(moveBackwards * forward);
 
                 //count && debugging
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
-                float speed = forwardSpeed + Input.GetAxis("Vertical"); //pos or neg number apply forward
+                float speed = forwardSpeed += Input.GetAxis("Vertical"); //pos or neg number apply forward
                 playerController.SimpleMove(moveForward * forward); //this sets distance travel
 
                 //count && debugging
