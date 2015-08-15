@@ -13,8 +13,13 @@ public class PlayerController : MonoBehaviour
     public float forwardSpeed = 10.0f; //forward
     public float moveTime = 2f; //moveTime
     public bool moveYes = false; //move yes or no
-    public float moveForward = 150.0f; //move forward
-    public float moveBackwards = -100.0f; //moveBackwards
+
+    /* MOVE SPEED */
+    public int moveForward = 120; //move forward
+    public int moveBackwards = -50; //moveBackwards
+
+    /** SPRINT **/
+    public int sprintSpeed = 2; //sprint speed
 
     /** STEPS TAKEN **/
     //used for food and water decrementation && counting movements
@@ -37,11 +42,11 @@ public class PlayerController : MonoBehaviour
     public Text rotateLeftCountText; //var for rotate left count UI
     public Text rotateRightCountText; //var for rotate right count UI
 
-    /** Speed 
+    /** Speed **/
+
     public Text forwardSpeedText;
     public Text backwardSpeedText;
-    public Text speedText; **/
-
+    public Text speedText; 
     /** PRIVATE **/
     private CharacterController playerController;
 
@@ -68,12 +73,12 @@ public class PlayerController : MonoBehaviour
     /* ROTATE */
     setRotateLeftCountText(); //method for rotate left count UI
     setRotateRightCountText(); //method for rotate right count UI
-    
-    /** SPEED
+
+    /** SPEED */
 
     setForwardSpeedText(); //method for forwardSpeed UI
-     setBackwardSpeedText(); //method for backwardSpeed UI
-    setSpeedText(); //method for forwardSpeed UI */
+    setBackwardSpeedText(); //method for backwardSpeed UI
+    
     
 
 
@@ -92,84 +97,51 @@ public class PlayerController : MonoBehaviour
             playerController.Move(Vector3.up);//force up
 
         }
-        /* rotate 
-        transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
-        //TEMP FLOAT 
-        Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
-        float speed = forwardSpeed * Input.GetAxis("Vertical"); //pos or neg number apply forward
-        playerController.SimpleMove(speed * forward); */
+       
 
+        /**** MOVEMENT ****/
 
-        /** rotate V3 
-        if (Input.GetButton("Vertical"))
-        {
-            //FORWARD
-            if (Input.GetAxis("Vertical") > 0 && !moveYes)
-            {
-                moveTime -= Time.deltaTime; //sets max time for movement
+        /**** SPEC ACTIONS ****/
+        /*** SPRINT ***/
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            moveForward = moveForward * sprintSpeed;
+            moveBackwards = moveBackwards * sprintSpeed;
 
-                Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
-                float speed = forwardSpeed + Input.GetAxis("Vertical"); //pos or neg number apply forward
-                playerController.SimpleMove(speed * forward);
+            Debug.Log("Sprint True [Shift]");
+        }
 
-                if (moveTime < 0)
-                {
-                    moveYes = true;
+        /* SPRINT REST MOVE RATE */
+        /* if shift key not pressed reset values */
+        if (!Input.GetKey(KeyCode.LeftShift)) {
+            moveForward = moveForward = 120 ; //forward [W]
+            moveBackwards = moveBackwards = -50 ; //back [S]
 
-                }
-
-            }
-
-            //BACKWARD
-            else
-            {
-                moveTime = Mathf.Min(moveTime + Time.deltaTime, 2f);
-                if (moveTime > 1) {
-                    moveYes = false;
-                }
-                
-                moveTime -= Time.deltaTime;
-                Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
-                float speed = forwardSpeed * Input.GetAxis("Vertical"); //pos or neg number apply forward
-                playerController.SimpleMove(speed * forward);
-
-
-            }
-        
-        }**/
-
-        /*transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0); 
-        //TEMP FLOAT 
-        Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
-        float speed = forwardSpeed * Input.GetAxis("Vertical"); //pos or neg number apply forward
-        playerController.SimpleMove(speed * forward); */
-
-
-        /** rotate v2 **/
+            Debug.Log("Sprint False");
+        } 
 
         /* Move FB WORKS */
-        if (Input.GetButtonDown("Vertical"))
-        {
+        if (Input.GetButtonDown("Vertical")) {
 
             //BACKWARD
-            if (Input.GetAxis("Vertical") > 0)
-            {
+            if (Input.GetAxis("Vertical") > 0) {
+
                 Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
                 float speed = forwardSpeed -= Input.GetAxis("Vertical"); //pos or neg number apply forward
                 playerController.SimpleMove(moveBackwards * forward);
+
 
                 //count && debugging
                 backwardMoveCount += 1;
                 //display to string
                 setbackwardCountText(); //calls function to display ui text
-                
+
+                Debug.Log("backNumb" + moveBackwards.ToString());
                 
                 Debug.Log("back [S]");
             }
 
             //FORWARD
-            else
-            {
+            else  {
                 Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
                 float speed = forwardSpeed += Input.GetAxis("Vertical"); //pos or neg number apply forward
                 playerController.SimpleMove(moveForward * forward); //this sets distance travel
@@ -179,8 +151,8 @@ public class PlayerController : MonoBehaviour
 
                 setForwardCountText(); //calls function to display ui text
 
-                
-                
+
+                Debug.Log("forwardNumb" + moveForward.ToString());
                 Debug.Log("forward [W]");
             }
 
@@ -190,12 +162,10 @@ public class PlayerController : MonoBehaviour
          http://answers.unity3d.com/questions/611550/how-to-make-a-shift-button-that-stops-after-a-cert.html */
 
         /* ROTATE LR */
-        if (Input.GetButtonDown("leftRight"))
-        {
+        if (Input.GetButtonDown("leftRight")) {
 
             //RIGHT
-            if (Input.GetAxis("leftRight") > 0)
-            {
+            if (Input.GetAxis("leftRight") > 0) {
 
                 playerController.transform.Rotate(0, 90, 0);
                 //count && debugging
@@ -216,6 +186,10 @@ public class PlayerController : MonoBehaviour
 
                 Debug.Log("-90 [E]");
             }
+
+
+
+
 
            /**** LEFT RIGHT USING A AND D STRAFE ****/
 
@@ -242,6 +216,9 @@ public class PlayerController : MonoBehaviour
                 }
 
             } */
+
+
+
 
 
 
@@ -304,15 +281,15 @@ public class PlayerController : MonoBehaviour
     /** SPEED **/
     /* GEN SPEED */
 
-    /* FORWARD SPEED 
+    /* FORWARD SPEED */
     void setForwardSpeedText() {
-        forwardSpeedText.text = "FS: " + forwardSpeed.ToString();
+        forwardSpeedText.text = "FS: " + moveForward.ToString();
     }
-     BACKWARD SPEED 
+     /* BACKWARD SPEED */
 
     void setBackwardSpeedText()
     {
-        backwardSpeedText.text = "BS: " + backwardSpeed.ToString();
-    } */
+        backwardSpeedText.text = "BS: " + moveBackwards.ToString();
+    } 
 
 }
