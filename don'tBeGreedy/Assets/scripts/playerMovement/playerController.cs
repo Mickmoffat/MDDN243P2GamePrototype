@@ -17,9 +17,16 @@ public class PlayerController : MonoBehaviour
     /* MOVE SPEED */
     public int moveForward = 120; //move forward
     public int moveBackwards = -50; //moveBackwards
+    public int moveStrafeL = 25; //strafe left
+    public int moveStrafeR = -25; //strafe right
 
     /** SPRINT **/
     public int sprintSpeed = 2; //sprint speed
+
+    /** JUMP SPEED **/
+    public float jumpSpeed = 100f;
+    /* CHECK JUMP */
+    public bool jumpYes = false;
 
     /** STEPS TAKEN **/
     //used for food and water decrementation && counting movements
@@ -44,9 +51,7 @@ public class PlayerController : MonoBehaviour
 
     /** Speed **/
 
-    public Text forwardSpeedText;
-    public Text backwardSpeedText;
-    public Text speedText; 
+
     /** PRIVATE **/
     private CharacterController playerController;
 
@@ -76,8 +81,7 @@ public class PlayerController : MonoBehaviour
 
     /** SPEED */
 
-    setForwardSpeedText(); //method for forwardSpeed UI
-    setBackwardSpeedText(); //method for backwardSpeed UI
+
     
     
 
@@ -86,48 +90,103 @@ public class PlayerController : MonoBehaviour
         playerController = GetComponent<CharacterController>();
     }
 
+    void FixedUpdate() {
+        /** JUMP UP **/
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            //jumpYes = true;
+            playerController.Move(Vector3.up);
+
+
+            Debug.Log("Jump True [Space]");
+        }
+    }
+
     // Update is called once per frame
 
 
     void Update() {
-        /* Check to see if grounded JUMP*/
+        /* Check to see if grounded JUMP */
 
-        if (Input.GetKey(KeyCode.Space) && playerController.isGrounded)
+
+         /* if (Input.GetKey(KeyCode.Space) && jumpYes == true)//playerController.isGrounded)
+        {
+            playerController.Move(Vector3.up);//force up
+            
+
+            Debug.Log("Jump True [Space]");
+        } */
+
+            //if (Input.GetKey(KeyCode.Space) && playerController.isGrounded) {
+            
+            //}
+
+
+
+        //if (jumpYes == false) { 
+
+        //    playerController.Move(Vector3.down);
+
+        //    Debug.Log(jumpYes.ToString());
+        //}
+        /*
+
+        if (Input.GetAxis ("Vertical") > 1 && Input.GetKey(KeyCode.Space)) //&& playerController.isGrounded)
         {
             playerController.Move(Vector3.up);//force up
 
+            Debug.Log("Jump True [Space]");
         }
+
+       else {
+       playerController.Move(Vector3.down);
+            
+       Debug.Log("False True [Space]");
+}
        
 
         /**** MOVEMENT ****/
 
         /**** SPEC ACTIONS ****/
+        /*** JUMP ***/
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            playerController.Move(Vector3.down);
+        }
+
         /*** SPRINT ***/
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
             moveForward = moveForward * sprintSpeed;
             moveBackwards = moveBackwards * sprintSpeed;
+            moveStrafeR = moveStrafeR * sprintSpeed;
+            moveStrafeL = moveStrafeL * sprintSpeed;
 
             Debug.Log("Sprint True [Shift]");
         }
 
         /* SPRINT REST MOVE RATE */
         /* if shift key not pressed reset values */
-        if (!Input.GetKey(KeyCode.LeftShift)) {
-            moveForward = moveForward = 120 ; //forward [W]
-            moveBackwards = moveBackwards = -50 ; //back [S]
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            moveForward = moveForward = 120; //forward [W]
+            moveBackwards = moveBackwards = -50; //back [S]
+            moveStrafeR = moveStrafeR = 25;
+            moveStrafeL = moveStrafeL = -25;
 
             Debug.Log("Sprint False");
         } 
 
-        /* Move FB WORKS */
-        if (Input.GetButtonDown("Vertical")) {
+        /*** STRAFE LR ***/
+        if (Input.GetButtonDown("Horizontal"))
+        {
 
-            //BACKWARD
-            if (Input.GetAxis("Vertical") > 0) {
+            //LEFT
+            if (Input.GetAxis("Horizontal") > 0)
+            {
 
-                Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
-                float speed = forwardSpeed -= Input.GetAxis("Vertical"); //pos or neg number apply forward
-                playerController.SimpleMove(moveBackwards * forward);
+                Vector3 forward = transform.TransformDirection(Vector3.left);// looking for player is facing 
+                float speed = forwardSpeed += Input.GetAxis("Horizontal"); //pos or neg number apply forward
+                playerController.SimpleMove(moveStrafeL * forward); //this sets distance travel
 
 
                 //count && debugging
@@ -135,8 +194,48 @@ public class PlayerController : MonoBehaviour
                 //display to string
                 setbackwardCountText(); //calls function to display ui text
 
-                Debug.Log("backNumb" + moveBackwards.ToString());
-                
+                //Debug.Log("backNumb" + moveBackwards.ToString());
+                Debug.Log("Left [D]");
+            }
+
+            //RIGHT
+            else
+            {
+                Vector3 forward = transform.TransformDirection(Vector3.left);// looking for player is facing 
+                float speed = forwardSpeed += Input.GetAxis("Horizontal"); //pos or neg number apply forward
+                playerController.SimpleMove(moveStrafeR * forward); //this sets distance travel
+
+                //count && debugging
+                forwardMoveCount += 1;
+                //display to string
+                setForwardCountText(); //calls function to display ui text
+
+
+
+               // Debug.Log("forwardNumb" + moveForward.ToString());
+                Debug.Log("Right [A]");
+            }
+
+        }
+
+
+      /* MOVE FORWARD BACKWARD */
+        if (Input.GetButtonDown("Vertical")) {
+
+            //BACKWARD
+            if (Input.GetAxis("Vertical") > 0) {
+
+                Vector3 forward = transform.TransformDirection(Vector3.forward);// looking for player is facing 
+                float speed = forwardSpeed -= Input.GetAxis("Vertical"); //pos or neg number apply forward
+                playerController.SimpleMove(moveBackwards * forward); //this sets distance travel
+
+
+                //count && debugging
+                backwardMoveCount += 1;
+                //display to string
+                setbackwardCountText(); //calls function to display ui text
+
+                Debug.Log("backNumb" + moveBackwards.ToString());               
                 Debug.Log("back [S]");
             }
 
@@ -148,8 +247,9 @@ public class PlayerController : MonoBehaviour
 
                 //count && debugging
                 forwardMoveCount += 1;
-
+                //display to string
                 setForwardCountText(); //calls function to display ui text
+                
 
 
                 Debug.Log("forwardNumb" + moveForward.ToString());
@@ -158,8 +258,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        /* CODE FROM
-         http://answers.unity3d.com/questions/611550/how-to-make-a-shift-button-that-stops-after-a-cert.html */
+        
 
         /* ROTATE LR */
         if (Input.GetButtonDown("leftRight")) {
@@ -187,74 +286,13 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("-90 [E]");
             }
 
-
-
-
-
-           /**** LEFT RIGHT USING A AND D STRAFE ****/
-
-            /**** IDK CANT GET SIDE TO SIDE RAGE ***
-            if (Input.GetButtonDown("A"))
-            {
-
-                //BACKWARD
-                if (Input.GetAxis("Horizontal") > 0)
-                {
-                    Vector3 forward = transform.TransformDirection(Vector3.left);// looking for player is facing 
-                    float speed = forwardSpeed - Input.GetAxis("Horizontal"); //pos or neg number apply forward
-                    playerController.SimpleMove(moveBackwards * forward);
-                    Debug.Log("back [S]");
-                }
-
-                //FORWARD
-                else
-                {
-                    Vector3 forward = transform.TransformDirection(Vector3.right);// looking for player is facing 
-                    float speed = forwardSpeed + Input.GetAxis("Vertical"); //pos or neg number apply forward
-                    playerController.SimpleMove(moveForward * forward); //this sets distance travel
-                    Debug.Log("forward [W]");
-                }
-
-            } */
-
-
-
-
-
-
-
-            /** Move Left Right 
-            if (Input.GetButtonDown("Horizontal"))
-            {
-
-                //FORWARD
-                if (Input.GetAxis("Horizontal") > 0)
-                {
-                    Vector3 forward = transform.TransformDirection(Vector3.left);// looking for player is facing 
-                    float speed = forwardSpeed - Input.GetAxis("Horizontal"); //pos or neg number apply forward
-                    playerController.SimpleMove(moveBackwards * forward);
-
-
-
-
-                }
-
-                //BACKWARD
-                else
-                {
-
-                    Vector3 forward = transform.TransformDirection(Vector3.right);// looking for player is facing 
-                    float speed = forwardSpeed + Input.GetAxis("Horizontal"); //pos or neg number apply forward
-                    playerController.SimpleMove(moveForward * forward); //this sets distance travel
-                }
-
-            } **/
-
-
         }
 
 
     }
+
+    /**** JUMP ****/
+    
 
     /**** DEBUGGING UI METHODS ****/
     /** MOVE **/
@@ -282,14 +320,6 @@ public class PlayerController : MonoBehaviour
     /* GEN SPEED */
 
     /* FORWARD SPEED */
-    void setForwardSpeedText() {
-        forwardSpeedText.text = "FS: " + moveForward.ToString();
-    }
-     /* BACKWARD SPEED */
 
-    void setBackwardSpeedText()
-    {
-        backwardSpeedText.text = "BS: " + moveBackwards.ToString();
-    } 
 
 }
