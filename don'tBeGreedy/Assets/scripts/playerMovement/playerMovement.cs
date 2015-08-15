@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-/*** Don't Be Greedy Prototype Alpha 1B player movement Script >:) [5.5] ***/
+/*** Don't Be Greedy Prototype Alpha 1c player movement Script >:) [5.6] ***/
 
 public class playerMovement : MonoBehaviour
 {
