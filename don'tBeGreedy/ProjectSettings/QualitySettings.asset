@@ -28,7 +28,16 @@ QualitySettings:
     lodBias: .300000012
     maximumLODLevel: 0
     particleRaycastBudget: 4
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Web
+    - Samsung TV
+    - WebGL
+    - WP8
+    - Windows Store Apps
+    - BlackBerry
+    - Android
+    - iPhone
+    - Standalone
   - serializedVersion: 2
     name: Fast
     pixelLightCount: 0
@@ -51,7 +60,16 @@ QualitySettings:
     lodBias: .400000006
     maximumLODLevel: 0
     particleRaycastBudget: 16
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Web
+    - Samsung TV
+    - WebGL
+    - WP8
+    - Windows Store Apps
+    - BlackBerry
+    - Android
+    - iPhone
+    - Standalone
   - serializedVersion: 2
     name: Simple
     pixelLightCount: 1
@@ -74,7 +92,16 @@ QualitySettings:
     lodBias: .699999988
     maximumLODLevel: 0
     particleRaycastBudget: 64
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Web
+    - Samsung TV
+    - WebGL
+    - WP8
+    - Windows Store Apps
+    - BlackBerry
+    - Android
+    - iPhone
+    - Standalone
   - serializedVersion: 2
     name: Good
     pixelLightCount: 2
@@ -97,7 +124,16 @@ QualitySettings:
     lodBias: 1
     maximumLODLevel: 0
     particleRaycastBudget: 256
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Web
+    - Samsung TV
+    - WebGL
+    - WP8
+    - Windows Store Apps
+    - BlackBerry
+    - Android
+    - iPhone
+    - Standalone
   - serializedVersion: 2
     name: Beautiful
     pixelLightCount: 8
@@ -134,11 +170,11 @@ QualitySettings:
     blendWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
-    antiAliasing: 2
+    antiAliasing: 4
     softParticles: 1
     softVegetation: 1
-    realtimeReflectionProbes: 1
-    billboardsFaceCameraPosition: 1
+    realtimeReflectionProbes: 0
+    billboardsFaceCameraPosition: 0
     vSyncCount: 1
     lodBias: 2
     maximumLODLevel: 0

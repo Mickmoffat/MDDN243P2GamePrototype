@@ -14,7 +14,7 @@ SceneSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 6
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: .227941155, g: .227941155, b: .227941155, a: 1}
   m_FogMode: 3
   m_FogDensity: .100000001
@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: .0485577397, g: .0514705777, b: .0280060507, a: 1}
   m_AmbientEquatorColor: {r: .404411763, g: .440669268, b: .808823526, a: 1}
   m_AmbientGroundColor: {r: .403921574, g: .43921569, b: .807843149, a: 1}
-  m_AmbientIntensity: .25999999
+  m_AmbientIntensity: .5
   m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: .5
@@ -325,6 +325,30 @@ Prefab:
       propertyPath: moveTimeCountText
       value: 
       objectReference: {fileID: 1756130148}
+    - target: {fileID: 2022912, guid: 90a51dbbbc01c1c4194a2b8ed13dba97, type: 2}
+      propertyPath: m_OcclusionCulling
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496962, guid: 90a51dbbbc01c1c4194a2b8ed13dba97, type: 2}
+      propertyPath: lensflareMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10859422, guid: 90a51dbbbc01c1c4194a2b8ed13dba97, type: 2}
+      propertyPath: m_Intensity
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 10859422, guid: 90a51dbbbc01c1c4194a2b8ed13dba97, type: 2}
+      propertyPath: m_Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 10859422, guid: 90a51dbbbc01c1c4194a2b8ed13dba97, type: 2}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 12472910, guid: 90a51dbbbc01c1c4194a2b8ed13dba97, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90a51dbbbc01c1c4194a2b8ed13dba97, type: 2}
   m_IsPrefabParent: 0
@@ -346,9 +370,9 @@ MonoBehaviour:
   distanceFog: 0
   useRadialDistance: 0
   heightFog: 1
-  height: 1
+  height: 2
   heightDensity: 2
-  startDistance: 0
+  startDistance: 5
   fogShader: {fileID: 4800000, guid: 70d8568987ac0499f952b54c7c13e265, type: 3}
 --- !u!1001 &282395263
 Prefab:

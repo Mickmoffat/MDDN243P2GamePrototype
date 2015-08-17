@@ -16,7 +16,7 @@
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Editor:5</UnityProjectType>
-    <UnityBuildTarget>StandaloneOSXIntel:4</UnityBuildTarget>
+    <UnityBuildTarget>StandaloneOSXUniversal:2</UnityBuildTarget>
     <UnityVersion>5.1.1f1</UnityVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
